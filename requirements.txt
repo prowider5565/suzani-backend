@@ -1,0 +1,14 @@
+asgiref==3.8.1
+Django==5.0.7
+djangorestframework==3.15.2
+sqlparse==0.5.0
+environs
+psycopg2
+pillow
+django-redis
+djangorestframework-simplejwt
+django-unfold
+django-filter
+drf-yasg
+django-cors-headers
+paypalrestsdk

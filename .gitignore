@@ -1,0 +1,6 @@
+staticfiles
+.env
+/accounts/migrations
+media
+products/migrations
+social/migrations
