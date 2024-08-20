@@ -21,7 +21,6 @@ class Category(models.Model):
         return self.name
 
 
-
 class Product(BaseModel):
     name = models.CharField(max_length=255, null=False)
     description = models.TextField(max_length=9000)
@@ -68,6 +67,3 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review for {self.product.name} by {self.full_name}"
-
-
-

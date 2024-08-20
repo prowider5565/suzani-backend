@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     "django.contrib.admin",  # required
     "drf_yasg",
     "django_filters",
-    "core",
     "accounts",
     "products",
     "social",
