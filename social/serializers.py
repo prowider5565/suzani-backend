@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Advertisement
+from .models import Advertisement, SocialLinks
 
 
 class AdvertisementSerializer(serializers.ModelSerializer):
@@ -8,21 +8,8 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         model = Advertisement
         fields = ["image", "url", "content_type"]
 
-    # def to_representation(self, instance):
-    #     context = super().to_representation(instance)
-    #     for c in context:
-    #         del c[c["content_type"]]
 
-    #     return context
-
-
-class SocialLinksSerializer(serializers.Serializer):
-    facebook = serializers.URLField()
-    twitter = serializers.URLField()
-    instagram = serializers.URLField()
-    watsup = serializers.URLField()
-    telegram = serializers.URLField()
-
-    def to_representation(self, instance):
-        context = super().to_representation(instance)
-        context["author"] = instance.author
+class SocialLinksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SocialLinks
+        fields = "__all__"

@@ -1,5 +1,5 @@
 import django_filters
-from .models import Product, Category, Tag, Review
+from .models import Product, Category, Review
 
 
 class ProductFilter(django_filters.FilterSet):

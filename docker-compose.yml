@@ -17,6 +17,7 @@ services:
     container_name: web-service
     build: .
     command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+    # command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
       - ./staticfiles:/code/staticfiles
@@ -24,11 +25,6 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_HOST: ${DB_HOST}
     env_file:
       - .env
   redis:

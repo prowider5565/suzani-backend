@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Product, Category, Tag, ProductImage, Review
+from .models import Product, Category, ProductImage, Review
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -9,15 +9,8 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ["name", "slug", "id"]
 
 
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = ["name", "slug"]
-
-
 class ProductsSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
-    tags = TagSerializer(many=True)
 
     class Meta:
         model = Product
@@ -29,7 +22,6 @@ class ProductsSerializer(serializers.ModelSerializer):
             "price",
             "slug",
             "category",
-            "tags",
             "discount_price",
             "stock_quantity",
             "currency",
