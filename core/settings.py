@@ -13,7 +13,8 @@ env.read_env()
 SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = ["*"]
-# CSRF_TRUSTED_ORIGINS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["https://5b6d-93-188-80-101.ngrok-free.app"]
+CORS_ALLOWED_ORIGINS = ["https://5b6d-93-188-80-101.ngrok-free.app"]
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -73,99 +74,6 @@ INSTALLED_APPS = [
 ]
 
 
-UNFOLD = {
-    "SITE_TITLE": None,
-    "SITE_HEADER": None,
-    "SITE_URL": "/",
-    # "SITE_ICON": lambda request: static("icon.svg"),  # both modes, optimise for 32px height
-    "SITE_ICON": {
-        "light": lambda request: static("/image.png"),  # light mode
-        "dark": lambda request: static("/image.png"),  # dark mode
-    },
-    # "SITE_LOGO": lambda request: static("logo.svg"),  # both modes, optimise for 32px height
-    "SITE_LOGO": {
-        "light": lambda request: static("/image.png"),  # light mode
-        "dark": lambda request: static("/image.png"),  # dark mode
-    },
-    "SITE_SYMBOL": "speed",  # symbol from icon set
-    "SHOW_HISTORY": True,  # show/hide "History" button, default: True
-    # "SHOW_VIEW_ON_SITE": True,  # show/hide "View on site" button, default: True
-    # "ENVIRONMENT": "sample_app.environment_callback",
-    # "DASHBOARD_CALLBACK": "sample_app.dashboard_callback",
-    # "THEME": "dark",  # Force theme: "dark" or "light". Will disable theme switcher
-    # "LOGIN": {
-    #     "image": lambda request: static("sample/login-bg.jpg"),
-    #     "redirect_after": lambda request: reverse_lazy("admin:accounts_user_changelist"),
-    # },
-    "STYLES": [
-        lambda request: static("css/style.css"),
-    ],
-    "SCRIPTS": [
-        lambda request: static("js/script.js"),
-    ],
-    "COLORS": {
-        "primary": {
-            "50": "250 245 255",
-            "100": "243 232 255",
-            "200": "233 213 255",
-            "300": "216 180 254",
-            "400": "192 132 252",
-            "500": "168 85 247",
-            "600": "147 51 234",
-            "700": "126 34 206",
-            "800": "107 33 168",
-            "900": "88 28 135",
-            "950": "59 7 100",
-        },
-    },
-    "EXTENSIONS": {
-        "modeltranslation": {
-            "flags": {
-                "en": "🇬🇧",
-                "fr": "🇫🇷",
-                "nl": "🇧🇪",
-            },
-        },
-    },
-    "SIDEBAR": {
-        "show_search": True,  # Search in applications and models names
-        "show_all_applications": True,  # Dropdown with all applications and models
-        # "navigation": [
-        #     {
-        #         "title": _("Navigation"),
-        #         "separator": True,  # Top border
-        #         "items": [
-        #             {
-        #                 "title": _("Dashboard"),
-        #                 "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
-        #                 "link": reverse_lazy("admin:index"),
-        #                 "badge": "sample_app.badge_callback",
-        #                 "permission": lambda request: request.user.is_superuser,
-        #             },
-        #             {
-        #                 "title": _("Users"),
-        #                 "icon": "people",
-        #                 "link": reverse_lazy("admin:users_user_changelist"),
-        #             },
-        #         ],
-        #     },
-        # ],
-    },
-    # "TABS": [
-    #     {
-    #         "models": [
-    #             "app_label.model_name_in_lowercase",
-    #         ],
-    #         "items": [
-    #             {
-    #                 "title": _("Your custom title"),
-    #                 "link": reverse_lazy("admin:app_label_model_name_changelist"),
-    #                 "permission": "sample_app.permission_callback",
-    #             },
-    #         ],
-    #     },
-    # ],
-}
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),

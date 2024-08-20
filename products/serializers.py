@@ -30,13 +30,13 @@ class ProductsSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         context = super().to_representation(instance)
         context["uuid"] = instance.id
-        
+
         image_object = ProductImage.objects.filter(is_main=True, product=instance)
         if image_object.exists():
             context["cover_image"] = "/media/" + str(image_object.first().image)
         else:
             context["cover_image"] = "/media/default.png"
-        
+
         return context
 
 
@@ -45,11 +45,10 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ["product", "rating", "comment", "full_name"]
+        fields = ["id", "product", "full_name", "rating", "comment", "date_created"]
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation["product"] = ProductsSerializer(instance.product).data
         representation["date_created"] = instance.date_created
         return representation
 
@@ -58,4 +57,3 @@ class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
         fields = "__all__"
-

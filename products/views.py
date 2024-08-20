@@ -15,17 +15,6 @@ from .serializers import (
 )
 
 
-
-# class MyProductsListAPIView(ListAPIView):
-#     queryset = Product.objects.all()
-#     model = Product
-#     serializer_class = ProductsSerializer
-#     pagination_class = ProductsPagination
-#     # permission_classes = [IsAuthenticated]
-
-#     def get_queryset(self):
-#         pass
-
 class ProductsListAPIView(ListAPIView):
     model = Product
     pagination_class = ProductsPagination
@@ -68,14 +57,21 @@ class ProductsDetailAPIView(RetrieveAPIView):
 
 
 class ReviewListCreateAPIView(ListCreateAPIView):
-    # permission_classes = [IsAuthenticated]
     serializer_class = ReviewSerializer
     model = Review
     queryset = Review.objects.all()
     pagination_class = ReviewPagination
 
+    def get_queryset(self):
+        queryset = self.queryset
+        product_id = self.kwargs.get("product_id", None)
+        if product_id is not None:
+            filtered_queryset = queryset.filter(product__id=product_id)
+            return filtered_queryset
+        return self.queryset
+
 
 class CategoryListAPIView(ListAPIView):
     model = Category
-    queryset = Category.objects.all()   
+    queryset = Category.objects.all()
     serializer_class = CategorySerializer

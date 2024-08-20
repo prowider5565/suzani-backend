@@ -38,3 +38,7 @@ class AdvertisementAPIView(ListAPIView):
 class SocialLinksListAPIView(ListAPIView):
     serializer_class = SocialLinksSerializer
     queryset = SocialLinks.objects.all()
+
+    def get_queryset(self):
+        queryset = self.queryset.order_by("-date_created").last()
+        return [queryset]
