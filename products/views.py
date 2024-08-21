@@ -6,7 +6,7 @@ from rest_framework import filters
 
 from .pagination import ProductsPagination, ReviewPagination
 from .models import Product, Review, ProductImage, Category
-from .filters import ProductFilter
+from .filters import ProductFilter, ReviewFilterSet
 from .serializers import (
     ProductImageSerializer,
     ProductsSerializer,
@@ -26,7 +26,6 @@ class ProductsListAPIView(ListAPIView):
         "name",
         "description",
         "category__name",
-        "tags__name",
         "price",
         "discount_price",
         "currency",
@@ -61,15 +60,7 @@ class ReviewListCreateAPIView(ListCreateAPIView):
     model = Review
     queryset = Review.objects.all()
     pagination_class = ReviewPagination
-
-    def get_queryset(self):
-        queryset = self.queryset
-        product_id = self.kwargs.get("product_id", None)
-        if product_id is not None:
-            filtered_queryset = queryset.filter(product__id=product_id)
-            return filtered_queryset
-        return self.queryset
-
+    filterset_class = ReviewFilterSet
 
 class CategoryListAPIView(ListAPIView):
     model = Category

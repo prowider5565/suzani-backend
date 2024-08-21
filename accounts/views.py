@@ -1,5 +1,6 @@
+from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
 from drf_yasg.utils import swagger_auto_schema
@@ -11,7 +12,6 @@ from drf_yasg import openapi
 import json
 
 from .serializers import UserAccountSerializer, OTPSerializer
-from .utils import generate_random_digit
 
 
 @swagger_auto_schema(
@@ -95,3 +95,14 @@ class RegistrationAPIView(CreateAPIView):
             "access": str(refresh.access_token),
         }
         return Response(token)
+
+
+class UserDetailsAPIView(GenericAPIView):
+    serializer_class = UserAccountSerializer
+    queryset = get_user_model().objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)

@@ -12,3 +12,13 @@ class ProductFilter(django_filters.FilterSet):
     class Meta:
         model = Product
         fields = {"name": ["icontains"], "category": ["exact"]}
+
+
+class ReviewFilterSet(django_filters.FilterSet):
+    product_id = django_filters.UUIDFilter(
+        field_name="product__id", lookup_expr="exact"
+    )
+
+    class Meta:
+        model = Review
+        fields = ["product_id"]
