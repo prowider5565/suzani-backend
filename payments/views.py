@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from paycomuz.views import MerchantAPIView
 
-# Create your views here.
+from .validators import CheckOrder
+
+
+class TestView(MerchantAPIView):
+    VALIDATE_CLASS = CheckOrder
