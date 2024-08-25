@@ -138,9 +138,6 @@ STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# The directory where `collectstatic` will collect static files for deployment
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
 # Additional directories to look for static files
 STATICFILES_DIRS = [BASE_DIR / "static"]
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
