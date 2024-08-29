@@ -14,12 +14,12 @@ SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = True
-# CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
-CSRF_TRUSTED_ORIGINS = [
-    "https://suzani-abdulhakim.uz",
-    "https://api.suzani-abdulhakim.uz",
-    "http://localhost:8080",
-]
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
+# CSRF_TRUSTED_ORIGINS = [
+#     "https://suzani-abdulhakim.uz",
+#     "https://api.suzani-abdulhakim.uz",
+#     "http://localhost:8080",
+# ]
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
