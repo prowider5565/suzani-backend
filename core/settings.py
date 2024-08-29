@@ -14,13 +14,12 @@ SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = True
-CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
-PAYCOM_SETTINGS = {
-    "KASSA_ID": "KASSA ID",
-    "SECRET_KEY": "TEST KEY OR PRODUCTIN KEY",
-    "ACCOUNTS": {"KEY": "order_id"},
-}
-
+# CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
+CSRF_TRUSTED_ORIGINS = [
+    "https://suzani-abdulhakim.uz",
+    "https://api.suzani-abdulhakim.uz",
+    "http://localhost:8080",
+]
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,10 +40,49 @@ INSTALLED_APPS = [
     "drf_yasg",
     "django_filters",
     "accounts",
-    # "paycomuz",
+    "payments",
     "products",
     "social",
 ]
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR / "django_debug.log",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        "django.request": {
+            "handlers": ["console", "file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(weeks=1),

@@ -5,3 +5,4 @@ staticfiles
 products/migrations
 social/migrations
 **/__pycache__/
+django_debug.log
