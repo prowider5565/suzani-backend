@@ -4,5 +4,6 @@ staticfiles
 # media
 products/migrations
 social/migrations
+payments/migrations
 **/__pycache__/
 django_debug.log
