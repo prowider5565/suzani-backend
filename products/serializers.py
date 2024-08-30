@@ -23,7 +23,6 @@ class ProductsSerializer(serializers.ModelSerializer):
             "category",
             "discount_price",
             "stock_quantity",
-            "currency",
         ]
 
     def to_representation(self, instance):

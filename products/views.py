@@ -28,7 +28,6 @@ class ProductsListAPIView(ListAPIView):
         "category__name",
         "price",
         "discount_price",
-        "currency",
         "stock_quantity",
         "reviews__full_name",
         "reviews__comment",
