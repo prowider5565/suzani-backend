@@ -50,8 +50,9 @@ class ProductsDetailAPIView(RetrieveAPIView):
         product_images_serializer = ProductImageSerializer(
             instance=product_images, many=True
         )
-        product_images_serializer.data.append("/media/default.png")
-        data["images"] = product_images_serializer.data
+        images_list = product_images_serializer.data
+        images_list.append("/media/default.png")
+        data["images"] = images_list
         return Response(data)
 
 
@@ -61,6 +62,7 @@ class ReviewListCreateAPIView(ListCreateAPIView):
     queryset = Review.objects.all()
     pagination_class = ReviewPagination
     filterset_class = ReviewFilterSet
+
 
 class CategoryListAPIView(ListAPIView):
     model = Category
