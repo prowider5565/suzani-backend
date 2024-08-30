@@ -12,7 +12,7 @@ from accounts.mixins import DeleteButtonMixin
 @admin.register(Product)
 class ProductAdmin(DeleteButtonMixin, ModelAdmin):
     exclude = ["id", "status", "author"]
-    list_display = ("display_image_name", "delete_button")
+    list_display = ("display_image_name",)
     list_select_related = ("category",)
 
     def main_image(self, obj):
