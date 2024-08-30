@@ -15,11 +15,6 @@ DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
-# CSRF_TRUSTED_ORIGINS = [
-#     "https://suzani-abdulhakim.uz",
-#     "https://api.suzani-abdulhakim.uz",
-#     "http://localhost:8080",
-# ]
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -83,6 +78,7 @@ LOGGING = {
         },
     },
 }
+ADMIN_LOGO = "media/logo.png"
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(weeks=1),

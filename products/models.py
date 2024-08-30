@@ -5,7 +5,6 @@ from accounts.models import BaseModel
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
     parent = models.ForeignKey(
         "self",
         on_delete=models.SET_NULL,
@@ -24,8 +23,6 @@ class Category(models.Model):
 class Product(BaseModel):
     name = models.CharField(max_length=255, null=False)
     description = models.TextField(max_length=9000)
-    slug = models.SlugField(unique=True)
-    # sku = models.CharField(max_length=100, unique=True)
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
@@ -37,7 +34,6 @@ class Product(BaseModel):
     discount_price = models.DecimalField(
         max_digits=10, decimal_places=2, null=True, blank=True
     )
-    currency = models.CharField(max_length=20)
     stock_quantity = models.PositiveIntegerField()
 
     def __str__(self):

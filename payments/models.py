@@ -6,10 +6,10 @@ from accounts.models import BaseModel
 # Create your models here.
 class Order(BaseModel):
     CHOICES = (
-        ("pending", "Pending"),
-        ("payed", "Payed"),
-        ("on_delivery", "On delivery"),
-        ("delivered", "Delivered"),
+        ("pending", "🟡 Pending"),
+        ("payed", "💸 Payed"),
+        ("on_delivery", "✈️ On delivery"),
+        ("delivered", "🟢 Delivered"),
     )
     full_name = models.CharField(max_length=255)
     address = models.TextField(max_length=10000)
@@ -19,3 +19,6 @@ class Order(BaseModel):
     phone_number = models.CharField(max_length=100)
     payment_url = models.URLField(max_length=400, default="https://www.google.com")
     sale_status = models.CharField(max_length=50, choices=CHOICES)
+
+    def __str__(self) -> str:
+        return f"Order for user: {self.full_name} Status: {self.sale_status}"

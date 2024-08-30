@@ -26,9 +26,9 @@ def start_payment_process(request):
         "currency": "USD",
         "language": "EN",
         "hooks": {
-            "webhookGateway": "https://042f-83-222-6-203.ngrok-free.app/payments/webhook/",
-            "successRedirectGateway": "https://suzani-abdulhakim.uz/",
-            "errorRedirectGateway": "https://suzani-abdulhakim.uz/",
+            "webhookGateway": env.str("DOMAIN") + "/payments/webhook/",
+            "successRedirectGateway": env.str("DOMAIN"),
+            "errorRedirectGateway": env.str("DOMAIN") + "/failed-payment",
         },
         "metadata": {
             "order": {"orderId": "OrderId"},

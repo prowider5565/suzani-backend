@@ -5,9 +5,15 @@ from accounts.models import BaseModel
 
 class Advertisement(BaseModel):
     CHOICES = (("image", "Image"), ("video", "Video"))
+    title = models.CharField(
+        max_length=255, default="Defult title for an advertisement"
+    )
     image = models.ImageField(upload_to="advertisements/", null=True)
     url = models.URLField(null=True, max_length=255)
     content_type = models.CharField(choices=CHOICES)
+
+    def __str__(self):
+        return self.url if self.url else "No URL provided"
 
 
 class SocialLinks(BaseModel):
@@ -20,6 +26,5 @@ class SocialLinks(BaseModel):
     watsup = models.URLField(null=False, max_length=255)
     telegram = models.URLField(null=False, max_length=255)
 
-    def create(self, validated_data):
-        self.objects.all().delete()
-        return super().create(validated_data)
+    def __str__(self):
+        return f"Social Link: {self.email} - {self.phone_number}"
