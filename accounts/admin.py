@@ -1,8 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.utils.html import format_html
+from django.http import HttpRequest
 from unfold.admin import ModelAdmin
 from django.contrib import admin
 from django.urls import reverse
+from typing import Any
 
 
 @admin.register(get_user_model())
@@ -36,3 +38,8 @@ class UserAdmin(ModelAdmin):
             )
 
     delete_button.short_description = "Delete"
+
+    def has_delete_permission(
+        self, request: HttpRequest, obj: Any | None = ...
+    ) -> bool:
+        return obj == request.user
