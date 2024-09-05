@@ -19,3 +19,4 @@ class DeleteButtonMixin:
     def get_list_display(self, request):
         list_display = super().get_list_display(request)
         return list_display + ("delete_button",)
+ 
