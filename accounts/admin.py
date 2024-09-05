@@ -15,12 +15,6 @@ class UserAdmin(ModelAdmin):
         list_display = super().get_list_display(request)
         return list_display + ("delete_button",)
 
-    def get_readonly_fields(self, request, obj=None):
-        if obj and obj == request.user:
-            # Make all fields readonly for the current user
-            return [field.name for field in obj._meta.fields]
-        return super().get_readonly_fields(request, obj)
-
     def delete_button(self, obj):
         if obj.is_superuser:
             # If the current object is the logged-in user, show a disabled delete button
