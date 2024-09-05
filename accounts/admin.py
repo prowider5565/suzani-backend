@@ -11,6 +11,10 @@ from typing import Any
 class UserAdmin(ModelAdmin):
     exclude = ["id", "status", "author"]
 
+    def get_list_display(self, request):
+        list_display = super().get_list_display(request)
+        return list_display + ("delete_button",)
+
     def get_readonly_fields(self, request, obj=None):
         if obj and obj == request.user:
             # Make all fields readonly for the current user
@@ -18,7 +22,7 @@ class UserAdmin(ModelAdmin):
         return super().get_readonly_fields(request, obj)
 
     def delete_button(self, obj):
-        if obj == self.request.user:
+        if obj.is_superuser:
             # If the current object is the logged-in user, show a disabled delete button
             return format_html(
                 '<div style="text-align: right;">'
@@ -42,4 +46,4 @@ class UserAdmin(ModelAdmin):
     def has_delete_permission(
         self, request: HttpRequest, obj: Any | None = ...
     ) -> bool:
-        return obj == request.user
+        return request.user.is_superuser and request.user != obj

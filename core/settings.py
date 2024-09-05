@@ -15,7 +15,7 @@ DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
-INSTALLED_APPS = [
+INSTALLED_APPS = [  
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
