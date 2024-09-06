@@ -15,7 +15,7 @@ class Order(BaseModel):
     address = models.TextField(max_length=10000)
     country = models.CharField(max_length=255)
     region = models.CharField(max_length=255)
-    sale_amount = models.BigIntegerField(default=0)
+    sale_amount = models.FloatField(default=0, null=False)
     phone_number = models.CharField(max_length=100)
     payment_url = models.URLField(max_length=400, default="https://www.google.com")
     sale_status = models.CharField(max_length=50, choices=CHOICES)

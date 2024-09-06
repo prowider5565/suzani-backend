@@ -31,7 +31,7 @@ class UserAdmin(ModelAdmin):
                 "🗑️ Delete</a></div>",
                 reverse(
                     f"admin:{obj._meta.app_label}_{obj._meta.model_name}_delete",
-                    args=[obj.pk], 
+                    args=[obj.pk],
                 ),
             )
 
