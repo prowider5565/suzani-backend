@@ -45,7 +45,6 @@ class ProductsDetailAPIView(RetrieveAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         data = serializer.data
-        data.pop("cover_image", None)
         product_images = ProductImage.objects.filter(product=instance)
         product_images_serializer = ProductImageSerializer(
             instance=product_images, many=True

@@ -7,7 +7,7 @@ from django.urls import reverse
 from typing import Any
 
 
-@admin.register(get_user_model())
+@admin.register(get_user_model())   
 class UserAdmin(ModelAdmin):
     exclude = ["id", "status", "author"]
 
