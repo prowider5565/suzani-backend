@@ -6,10 +6,10 @@ from accounts.models import BaseModel
 # Create your models here.
 class Order(BaseModel):
     CHOICES = (
-        ("pending", "🟡 Pending"),
-        ("payed", "💸 Payed"),
-        ("on_delivery", "✈️ On delivery"),
-        ("delivered", "🟢 Delivered"),
+        ("🟡 Pending", "🟡 Pending"),
+        ("💸 Payed", "💸 Payed"),
+        ("✈️ On delivery", "✈️ On delivery"),
+        ("🟢 Delivered", "🟢 Delivered"),
     )
     full_name = models.CharField(max_length=255)
     address = models.TextField(max_length=10000)
