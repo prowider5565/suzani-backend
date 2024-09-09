@@ -17,7 +17,6 @@ class AdvertisementAdmin(DeleteButtonMixin, ModelAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
         form.base_fields["image"].required = False
-        form.base_fields["url"].required = False
         return form
 
     list_display = ("display_image_title",)
