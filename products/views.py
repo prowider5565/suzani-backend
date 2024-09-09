@@ -49,8 +49,9 @@ class ProductsDetailAPIView(RetrieveAPIView):
         product_images_serializer = ProductImageSerializer(
             instance=product_images, many=True
         )
-        images_list = product_images_serializer.data
-        images_list.append("/media/default.png")
+        images_list =[row["image"] for row in product_images_serializer.data]
+        if not images_list:
+            images_list.append("/media/default.png")
         data["images"] = images_list
         return Response(data)
 
