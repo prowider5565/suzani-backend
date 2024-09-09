@@ -9,11 +9,10 @@ class Advertisement(BaseModel):
         max_length=255, default="Defult title for an advertisement"
     )
     image = models.ImageField(upload_to="advertisements/", null=True)
-    url = models.URLField(null=True, max_length=255)
     content_type = models.CharField(choices=CHOICES)
 
     def __str__(self):
-        return self.url if self.url else "No URL provided"
+        return self.title
 
 
 class SocialLinks(BaseModel):
