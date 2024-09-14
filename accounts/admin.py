@@ -44,6 +44,9 @@ class UserAdmin(ModelAdmin):
 
     delete_button.short_description = "Delete"
 
+    def get_queryset(self, request):
+        return super().get_queryset(request).exclude(username=request.user.username)
+
     def has_delete_permission(
         self, request: HttpRequest, obj: Any | None = ...
     ) -> bool:
