@@ -44,7 +44,7 @@ class UserAdmin(ModelAdmin):
 
     delete_button.short_description = "Delete"
 
-    def has_delete_permission(self, request: HttpRequest, obj) -> bool:
-        return (
-            request.user.is_superuser and request.user != obj and obj.role != "client"
-        )
+    def has_delete_permission(
+        self, request: HttpRequest, obj: Any | None = ...
+    ) -> bool:
+        return request.user.is_superuser and request.user != obj
