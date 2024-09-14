@@ -13,7 +13,7 @@ from .models import Advertisement
 class AdvertisementAdmin(DeleteButtonMixin, ModelAdmin):
     form = AdvertisementForm
     exclude = ["id", "status", "author"]
-    # readonly_fields = ["content_type"]
+    readonly_fields = ["content_type"]
     list_display = ("display_image_title",)
 
 
