@@ -48,5 +48,5 @@ class UserAdmin(ModelAdmin):
         self, request: HttpRequest, obj: Any | None = ...
     ) -> bool:
         return (
-            request.user.is_superuser and request.user != obj and obj.role != "client"
+            request.user.is_superuser and request.user != obj and obj.ojbects.role != "client"
         )
