@@ -6,7 +6,6 @@ from accounts.models import BaseModel
 # Create your models here.
 class Order(BaseModel):
     CHOICES = (
-        ("🟡 Pending", "🟡 Pending"),
         ("💸 Payed", "💸 Payed"),
         ("✈️ On delivery", "✈️ On delivery"),
         ("🟢 Delivered", "🟢 Delivered"),
