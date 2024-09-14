@@ -12,6 +12,7 @@ from drf_yasg import openapi
 import json
 
 from .serializers import UserAccountSerializer, OTPSerializer
+from .utils import generate_random_digit
 
 
 @swagger_auto_schema(
@@ -39,8 +40,7 @@ def send_email_verification(request):
         )
     # Get a connection to Redis
     connection = get_redis_connection()
-    # randint = generate_random_digit()
-    randint = "111111"
+    randint = generate_random_digit()
     data = json.dumps(serializer.validated_data)
     connection.set(randint, data)
 
