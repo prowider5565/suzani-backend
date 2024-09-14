@@ -26,7 +26,7 @@ class Advertisement(BaseModel):
             )
             video_ad.save()
 
-            # Then, update the current instance for the image and save it
+            # Then, update the current instance for the image and save itd
             self.youtube_link = ""
             self.content_type = "image"
             super().save(*args, **kwargs)
