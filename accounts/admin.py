@@ -9,8 +9,8 @@ from typing import Any, List
 
 @admin.register(get_user_model())
 class UserAdmin(ModelAdmin):
-    exclude = ["id", "status", "author", "is_staff", "password", "groups"]
-    readonly_fields = ["last_login", "date_joined"]
+    exclude = ["id", "status", "author", "is_staff", "groups"]
+    readonly_fields = ["last_login", "date_joined", "password"]
 
     def get_list_display(self, request):
         list_display = super().get_list_display(request)
