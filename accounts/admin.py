@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.urls import reverse
 from typing import Any, List
 
-    
+
 @admin.register(get_user_model())
 class UserAdmin(ModelAdmin):
     exclude = ["id", "status", "author", "is_staff", "password", "groups"]
@@ -47,4 +47,6 @@ class UserAdmin(ModelAdmin):
     def has_delete_permission(
         self, request: HttpRequest, obj: Any | None = ...
     ) -> bool:
-        return request.user.is_superuser and request.user != obj
+        return (
+            request.user.is_superuser and request.user != obj and obj.role != "client"
+        )
