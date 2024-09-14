@@ -1,7 +1,7 @@
 staticfiles
 .env
 /accounts/migrations
-# media
+media
 products/migrations
 social/migrations
 payments/migrations
