@@ -8,3 +8,11 @@ class AdvertisementForm(forms.ModelForm):
         model = Advertisement
         fields = "__all__"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance:
+            content_type = self.instance.content_type
+            if content_type == "video":
+                self.fields["image"].widget = forms.HiddenInput()
+            elif content_type == "image":
+                self.fields["youtube_link"].widget = forms.HiddenInput()

@@ -6,7 +6,7 @@ from .models import Advertisement, SocialLinks
 class AdvertisementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Advertisement
-        fields = ["image", "content_type"]
+        fields = ["image", "content_type", "youtube_link"]
 
 
 class SocialLinksSerializer(serializers.ModelSerializer):

@@ -13,13 +13,9 @@ from .models import Advertisement
 class AdvertisementAdmin(DeleteButtonMixin, ModelAdmin):
     form = AdvertisementForm
     exclude = ["id", "status", "author"]
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super().get_form(request, obj, **kwargs)
-        form.base_fields["image"].required = False
-        return form
-
+    # readonly_fields = ["content_type"]
     list_display = ("display_image_title",)
+
 
     def main_image(self, obj):
         if obj.image:
@@ -27,9 +23,8 @@ class AdvertisementAdmin(DeleteButtonMixin, ModelAdmin):
                 '<img src="{}" style="border-radius: 50%; width: 50px; height: 50px; margin-right: 10px;" />',
                 obj.image.url,
             )
-        # Return default image if no main image is found
         return format_html(
-            '<img src="{}" style="borobj.imageder-radius: 50%; width: 50px; height: 50px; margin-right: 10px;" />',
+            '<img src="{}" style="border-radius: 50%; width: 50px; height: 50px; margin-right: 10px;" />',
             f"{settings.MEDIA_URL}default.png",
         )
 

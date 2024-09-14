@@ -4,16 +4,23 @@ from django.http import HttpRequest
 from unfold.admin import ModelAdmin
 from django.contrib import admin
 from django.urls import reverse
-from typing import Any
+from typing import Any, List
 
-
-@admin.register(get_user_model())   
+    
+@admin.register(get_user_model())
 class UserAdmin(ModelAdmin):
-    exclude = ["id", "status", "author"]
+    exclude = ["id", "status", "author", "is_staff", "password", "groups"]
+    readonly_fields = ["last_login", "date_joined"]
 
     def get_list_display(self, request):
         list_display = super().get_list_display(request)
         return list_display + ("delete_button",)
+
+    def get_readonly_fields(self, request: HttpRequest, obj: Any = None) -> List[str]:
+        readonly_fields = super().get_readonly_fields(request, obj)
+        if obj and hasattr(obj, "role") and obj.role == "client":
+            return readonly_fields + [field.name for field in obj._meta.fields]
+        return readonly_fields
 
     def delete_button(self, obj):
         if obj.is_superuser:
