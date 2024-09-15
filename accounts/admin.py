@@ -10,7 +10,7 @@ from typing import Any, List
 @admin.register(get_user_model())
 class UserAdmin(ModelAdmin):
     exclude = ["id", "status", "author", "is_staff", "groups"]
-    readonly_fields = ["last_login", "date_joined", "password"]
+    readonly_fields = ["last_login", "date_joined"]
 
     def get_list_display(self, request):
         list_display = super().get_list_display(request)
@@ -33,9 +33,7 @@ class UserAdmin(ModelAdmin):
         else:
             # Otherwise, show the normal delete button
             return format_html(
-                '<div style="text-align: right;">'
-                '<a href="{}" class="button" style="color: white; background-color: #d9534f; padding: 6px 12px; border-radius: 5px; text-decoration: none;">'
-                "🗑️ Delete</a></div>",
+                '<a href="{}" class="deletelink">🗑️ Delete</a>',
                 reverse(
                     f"admin:{obj._meta.app_label}_{obj._meta.model_name}_delete",
                     args=[obj.pk],
@@ -44,8 +42,8 @@ class UserAdmin(ModelAdmin):
 
     delete_button.short_description = "Delete"
 
-    def get_queryset(self, request):
-        return super().get_queryset(request).exclude(username=request.user.username)
+    # def get_queryset(self, request):
+    #     return super().get_queryset(request).exclude(username=request.user.username)
 
     def has_delete_permission(
         self, request: HttpRequest, obj: Any | None = ...
