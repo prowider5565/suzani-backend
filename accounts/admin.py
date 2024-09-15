@@ -33,7 +33,9 @@ class UserAdmin(ModelAdmin):
         else:
             # Otherwise, show the normal delete button
             return format_html(
-                '<a href="{}" class="deletelink">🗑️ Delete</a>',
+                '<div style="text-align: right;">'
+                '<a href="{}" style="color: #d9534f; border: 2px solid #d9534f; padding: 6px 12px; border-radius: 5px; text-decoration: none; background-color: transparent; transition: background-color 0.3s, color 0.3s;">'
+                "🗑️ Delete</a></div>",
                 reverse(
                     f"admin:{obj._meta.app_label}_{obj._meta.model_name}_delete",
                     args=[obj.pk],
