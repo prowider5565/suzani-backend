@@ -44,7 +44,7 @@ class User(AbstractUser, BaseModel):
             # Hash the password if it's a new user or if the password is being changed
             self.is_staff = True
             self.password = make_password(self.password)
-            super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username
