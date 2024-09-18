@@ -78,15 +78,12 @@ def payze_webhook(request):
         try:
             data = json.loads(request.body)
             if data["PaymentStatus"] == "Captured":
-                l.info(data)
                 details = json.loads(
                     data.get("Metadata").get("ExtraAttributes")[0]["Value"]
                 )
-                l.info(details)
                 orders = details.pop("orders")
                 orderset_list = []
                 for product in orders:
-                    l.info(f"The current in process product: {product}")
                     order = OrderSet.objects.create(**product)
                     orderset_list.append(order.id)
 
@@ -94,7 +91,6 @@ def payze_webhook(request):
                 obj.sale_status = "💸 Payed"
                 obj.save()
                 obj.orders.set(orderset_list)
-                l.info("RESULT HERE -------------------->")
                 return JsonResponse({"message": "Payment status updated"}, status=200)
             return JsonResponse(data={"msg": "Payment in pending!"}, status=200)
         except json.JSONDecodeError:
