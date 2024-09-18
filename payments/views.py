@@ -7,6 +7,7 @@ import json
 
 from .serializers import OrderSerializer
 from core.logger import l
+from .models import Order
 
 env = environs.Env()
 env.read_env()
@@ -16,24 +17,37 @@ env.read_env()
 def start_payment_process(request):
     customer_serializer = OrderSerializer(data=request.data)
     customer_serializer.is_valid(raise_exception=True)
+    l.info(customer_serializer.data)
+    customer_data = customer_serializer.data
+    sale_amount = customer_data["sale_amount"]
+    customer_data["orders"] = [str(order_id) for order_id in customer_data["orders"]]
+    # customer_data["orders"] = [
+    #     {"id": str(order_id), "count": count}
+    #     for order_id, count in customer_data["orders"]
+    # ]
+    adata = json.dumps(customer_data)
     payload = {
         "source": "Card",
-        "amount": customer_serializer.validated_data["sale_amount"],
+        "amount": sale_amount,
         "currency": "USD",
         "language": "EN",
         "hooks": {
-            "webhookGateway": env.str("DOMAIN") + "/payments/webhook/",
+            # env.str("DOMAIN") + "
+            "webhookGateway": "https://18e1-84-54-73-7.ngrok-free.app/payments/webhook/",
             "successRedirectGateway": env.str("DOMAIN"),
             "errorRedirectGateway": env.str("DOMAIN") + "/failed-payment",
         },
         "metadata": {
             "order": {"orderId": "OrderId"},
             "extraAttributes": [
-                {"key": "key1", "value": "val2", "description": "desc1"}
+                {
+                    "key": "order_details",
+                    "value": adata,
+                    "description": "Whole data in json",
+                }
             ],
         },
     }
-
     token = f"{env.str('PAYZE_API_KEY')}:{env.str('PAYZE_SECRET_KEY')}"
     headers = {
         "accept": "application/json",
@@ -47,9 +61,7 @@ def start_payment_process(request):
     response = payment_request.json()
     payment_url = response.get("data").get("payment").get("paymentUrl")
     if status == 200:
-        customer_serializer.validated_data["payment_url"] = payment_url
-        customer_serializer.validated_data["sale_status"] = "💸 Payed"
-        customer_serializer.save()
+
         return JsonResponse(
             data={
                 "msg": "Ready to process the payment",
@@ -72,8 +84,16 @@ def payze_webhook(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
-            payment_id = data.get("payment_id")
-            status = data.get("status")
+            details = json.loads(
+                data.get("Metadata").get("ExtraAttributes")[0]["Value"]
+            )
+            l.info(details)
+            orders = details.pop("orders")
+            obj = Order(**details)
+            obj.sale_status = "💸 Payed"
+            obj.save()
+            obj.orders.set(orders)
+            l.info("RESULT HERE -------------------->")
             return JsonResponse({"message": "Payment status updated"}, status=200)
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON"}, status=400)

@@ -14,6 +14,7 @@ class OrderAdmin(ModelAdmin):
         "region",
         "sale_amount",
         "phone_number",
+        "orders",
     ]
 
     def has_add_permission(self, request):
