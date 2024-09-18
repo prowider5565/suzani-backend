@@ -6,8 +6,8 @@ import requests
 import json
 
 from .serializers import OrderSerializer
+from .models import Order, OrderSet
 from core.logger import l
-from .models import Order
 
 env = environs.Env()
 env.read_env()
@@ -17,23 +17,16 @@ env.read_env()
 def start_payment_process(request):
     customer_serializer = OrderSerializer(data=request.data)
     customer_serializer.is_valid(raise_exception=True)
-    l.info(customer_serializer.data)
-    customer_data = customer_serializer.data
-    sale_amount = customer_data["sale_amount"]
-    customer_data["orders"] = [str(order_id) for order_id in customer_data["orders"]]
-    # customer_data["orders"] = [
-    #     {"id": str(order_id), "count": count}
-    #     for order_id, count in customer_data["orders"]
-    # ]
-    adata = json.dumps(customer_data)
+    adata = customer_serializer.data
+    sale_amount = adata["sale_amount"]
+    adata = json.dumps(adata)
     payload = {
         "source": "Card",
         "amount": sale_amount,
         "currency": "USD",
         "language": "EN",
         "hooks": {
-            # env.str("DOMAIN") + "
-            "webhookGateway": "https://18e1-84-54-73-7.ngrok-free.app/payments/webhook/",
+            "webhookGateway": env.str("DOMAIN") + "/payments/webhook/",
             "successRedirectGateway": env.str("DOMAIN"),
             "errorRedirectGateway": env.str("DOMAIN") + "/failed-payment",
         },
@@ -84,17 +77,26 @@ def payze_webhook(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
-            details = json.loads(
-                data.get("Metadata").get("ExtraAttributes")[0]["Value"]
-            )
-            l.info(details)
-            orders = details.pop("orders")
-            obj = Order(**details)
-            obj.sale_status = "💸 Payed"
-            obj.save()
-            obj.orders.set(orders)
-            l.info("RESULT HERE -------------------->")
-            return JsonResponse({"message": "Payment status updated"}, status=200)
+            if data["PaymentStatus"] == "Captured":
+                l.info(data)
+                details = json.loads(
+                    data.get("Metadata").get("ExtraAttributes")[0]["Value"]
+                )
+                l.info(details)
+                orders = details.pop("orders")
+                orderset_list = []
+                for product in orders:
+                    l.info(f"The current in process product: {product}")
+                    order = OrderSet.objects.create(**product)
+                    orderset_list.append(order.id)
+
+                obj = Order(**details)
+                obj.sale_status = "💸 Payed"
+                obj.save()
+                obj.orders.set(orderset_list)
+                l.info("RESULT HERE -------------------->")
+                return JsonResponse({"message": "Payment status updated"}, status=200)
+            return JsonResponse(data={"msg": "Payment in pending!"}, status=200)
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON"}, status=400)
     else:

@@ -1,3 +1,4 @@
+from rest_framework.exceptions import ValidationError
 from rest_framework import serializers
 
 from .models import Product, Category, ProductImage, Review
@@ -11,7 +12,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProductsSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
-
+    
     class Meta:
         model = Product
         fields = "__all__"
@@ -36,6 +37,13 @@ class ProductsSerializer(serializers.ModelSerializer):
             context["cover_image"] = "/media/default.png"
 
         return context
+
+    def validate(self, attr):
+        if attr["discount_price"] > attr["price"]:
+            raise ValidationError(
+                detail=f"Discount price of the product {attr['name']} can't"
+                "be higher than the actual price!"
+            )
 
 
 class ReviewSerializer(serializers.ModelSerializer):

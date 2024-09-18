@@ -30,10 +30,8 @@ class Product(BaseModel):
         blank=True,
         related_name="products",
     )
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    discount_price = models.DecimalField(
-        max_digits=10, decimal_places=2, null=True, blank=True
-    )
+    price = models.PositiveIntegerField()
+    discount_price = models.PositiveSmallIntegerField(null=True, blank=True)
     stock_quantity = models.PositiveIntegerField()
 
     def __str__(self):
