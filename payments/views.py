@@ -1,6 +1,8 @@
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
+from drf_yasg.utils import swagger_auto_schema
 from django.http import JsonResponse
+from drf_yasg import openapi
 import environs
 import requests
 import json
@@ -13,6 +15,102 @@ env = environs.Env()
 env.read_env()
 
 
+@swagger_auto_schema(
+    method="post",
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            "full_name": openapi.Schema(
+                type=openapi.TYPE_STRING,
+                description="Customer's full name",
+                example="John Doe",
+            ),
+            "address": openapi.Schema(
+                type=openapi.TYPE_STRING,
+                description="Customer's address",
+                example="1234 Elm St, Apt 5",
+            ),
+            "country": openapi.Schema(
+                type=openapi.TYPE_STRING,
+                description="Customer's country",
+                example="USA",
+            ),
+            "region": openapi.Schema(
+                type=openapi.TYPE_STRING,
+                description="Customer's region",
+                example="California",
+            ),
+            "sale_amount": openapi.Schema(
+                type=openapi.TYPE_NUMBER,
+                format=openapi.FORMAT_FLOAT,
+                description="Total sale amount",
+                example=150.50,
+            ),
+            "phone_number": openapi.Schema(
+                type=openapi.TYPE_STRING,
+                description="Customer's phone number",
+                example="+1 234 567 8900",
+            ),
+            "orders": openapi.Schema(
+                type=openapi.TYPE_ARRAY,
+                items=openapi.Items(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "order_id": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            description="Order identifier",
+                            example="abc123",
+                        ),
+                        "product_name": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            description="Product name",
+                            example="T-shirt",
+                        ),
+                        "quantity": openapi.Schema(
+                            type=openapi.TYPE_INTEGER,
+                            description="Quantity of the product",
+                            example=2,
+                        ),
+                    },
+                ),
+                description="List of order items",
+            ),
+        },
+        required=["full_name", "sale_amount", "phone_number", "orders"],
+    ),
+    responses={
+        200: openapi.Response(
+            description="Payment successfully initiated",
+            examples={
+                "application/json": {
+                    "msg": "Ready to process the payment",
+                    "status": "OK",
+                    "redirect_url": "https://paymentgateway.com/pay/xyz123",
+                }
+            },
+        ),
+        400: openapi.Response(
+            description="Invalid input data",
+            examples={
+                "application/json": {
+                    "msg": "Payment Initialization failed!",
+                    "error": "Invalid sale_amount",
+                    "status": 400,
+                }
+            },
+        ),
+        500: openapi.Response(
+            description="Server error",
+            examples={
+                "application/json": {
+                    "msg": "Payment Initialization failed!",
+                    "error": "Internal server error",
+                    "status": 500,
+                }
+            },
+        ),
+    },
+)
 @api_view(["POST"])
 def start_payment_process(request):
     customer_serializer = OrderSerializer(data=request.data)

@@ -37,4 +37,4 @@ class OrderSet(BaseModel):
 
     def __str__(self):
         product_name = self.product.name if self.product else self.product_name
-        return f"📦 {self.count} stick(s) of {product_name}"
+        return f"📦 {self.count} stick(s) of {product_name}\n\n"

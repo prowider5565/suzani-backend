@@ -19,10 +19,10 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = [
             "full_name",
             "address",
-            "sale_amount",
+            "sale_amount",      
             "country",
             "phone_number",
             "region",
             "orders",
         ]
-        
+            
