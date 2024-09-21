@@ -56,7 +56,7 @@ env.read_env()
                 items=openapi.Items(
                     type=openapi.TYPE_OBJECT,
                     properties={
-                        "order_id": openapi.Schema(
+                        "product_id": openapi.Schema(
                             type=openapi.TYPE_STRING,
                             description="Order identifier",
                             example="abc123",
@@ -66,7 +66,7 @@ env.read_env()
                             description="Product name",
                             example="T-shirt",
                         ),
-                        "quantity": openapi.Schema(
+                        "count": openapi.Schema(
                             type=openapi.TYPE_INTEGER,
                             description="Quantity of the product",
                             example=2,
