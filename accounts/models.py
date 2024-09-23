@@ -41,9 +41,10 @@ class User(AbstractUser, BaseModel):
 
     def save(self, *args, **kwargs):
         if self.pk is None or not User.objects.filter(pk=self.pk).exists():
-            # Hash the password if it's a new user or if the password is being changed
-            self.is_staff = True
-            self.password = make_password(self.password)
+            if self.role.lower() == "manager":
+                # Hash the password if it's a new user or if the password is being changed
+                self.is_staff = True
+                self.password = make_password(self.password)
         super().save(*args, **kwargs)
 
     def __str__(self):

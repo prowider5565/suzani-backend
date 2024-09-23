@@ -11,3 +11,4 @@ urlpatterns = [
     path("register/", views.RegistrationAPIView.as_view(), name="registration"),
     path("me/", views.UserDetailsAPIView.as_view()),
 ]
+    
