@@ -14,7 +14,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = [env.str("DOMAIN")]
 CSRF_TRUSTED_ORIGINS = [f"https://{env.str("DOMAIN")}"]
-CORS_ALLOWED_ORIGINS = [f"https://{env.str("DOMAIN")}"]
+CORS_ALLOWED_ORIGINS = [env.str("CORS_DOMAIN")]
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -203,8 +203,8 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
