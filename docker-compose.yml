@@ -16,26 +16,22 @@ services:
   web:
     container_name: web-service
     build: .
-    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn core.wsgi:application --bind ${HOST}:${PORT} --log-level debug
+    # command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
       - ./staticfiles:/code/staticfiles
     ports:
-      - "8000:8000"
+      - "${PORT}:${PORT}"
     depends_on:
       - db
-    environment:
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_HOST: ${DB_HOST}
     env_file:
       - .env
   redis:
     container_name: redis-service
     image: redis:latest
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT}:${REDIS_PORT}"
 
 volumes:
   postgres_data:

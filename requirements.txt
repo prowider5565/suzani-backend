@@ -6,9 +6,10 @@ environs
 psycopg2
 pillow
 django-redis
-djangorestframework-simplejwt
+djangorestframework-simplejwt   
 django-unfold
 django-filter
 drf-yasg
-django-cors-headers
-paypalrestsdk
+django-cors-headers 
+setuptools
+requests

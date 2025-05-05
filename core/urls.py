@@ -1,11 +1,10 @@
 from drf_yasg.generators import OpenAPISchemaGenerator
 from django.conf.urls.static import static
+from drf_yasg.views import get_schema_view
 from django.urls import path, include
 from django.contrib import admin
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
 from django.conf import settings
-from rest_framework import permissions
+from drf_yasg import openapi
 
 
 class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
@@ -43,6 +42,7 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("social/", include("social.urls")),
     path("products/", include("products.urls")),
+    path("payments/", include("payments.urls")),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,7 +6,7 @@ from rest_framework import filters
 
 from .pagination import ProductsPagination, ReviewPagination
 from .models import Product, Review, ProductImage, Category
-from .filters import ProductFilter
+from .filters import ProductFilter, ReviewFilterSet
 from .serializers import (
     ProductImageSerializer,
     ProductsSerializer,
@@ -14,17 +14,6 @@ from .serializers import (
     ReviewSerializer,
 )
 
-
-
-# class MyProductsListAPIView(ListAPIView):
-#     queryset = Product.objects.all()
-#     model = Product
-#     serializer_class = ProductsSerializer
-#     pagination_class = ProductsPagination
-#     # permission_classes = [IsAuthenticated]
-
-#     def get_queryset(self):
-#         pass
 
 class ProductsListAPIView(ListAPIView):
     model = Product
@@ -37,10 +26,8 @@ class ProductsListAPIView(ListAPIView):
         "name",
         "description",
         "category__name",
-        "tags__name",
         "price",
         "discount_price",
-        "currency",
         "stock_quantity",
         "reviews__full_name",
         "reviews__comment",
@@ -58,24 +45,26 @@ class ProductsDetailAPIView(RetrieveAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         data = serializer.data
-        data.pop("cover_image", None)
         product_images = ProductImage.objects.filter(product=instance)
         product_images_serializer = ProductImageSerializer(
             instance=product_images, many=True
         )
-        data["images"] = product_images_serializer.data
+        images_list =[row["image"] for row in product_images_serializer.data]
+        if not images_list:
+            images_list.append("/media/default.png")
+        data["images"] = images_list
         return Response(data)
 
 
 class ReviewListCreateAPIView(ListCreateAPIView):
-    # permission_classes = [IsAuthenticated]
     serializer_class = ReviewSerializer
     model = Review
     queryset = Review.objects.all()
     pagination_class = ReviewPagination
+    filterset_class = ReviewFilterSet
 
 
 class CategoryListAPIView(ListAPIView):
     model = Category
-    queryset = Category.objects.all()   
+    queryset = Category.objects.all()
     serializer_class = CategorySerializer
