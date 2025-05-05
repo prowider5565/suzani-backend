@@ -12,19 +12,10 @@ env = Env()
 env.read_env()
 SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
-ALLOWED_HOSTS = ["https://suzani-abdulhakim.uz", "https://api.suzani-abdulhakim.uz"]
-CSRF_TRUSTED_ORIGINS = [
-    "https://suzani-abdulhakim.uz",
-    "https://api.suzani-abdulhakim.uz",
-]
-CSRF_TRUSTED_ORIGINS = [
-    "https://suzani-abdulhakim.uz",
-    "https://api.suzani-abdulhakim.uz",
-]  # if using ngrok
-CORS_ALLOWED_ORIGINS = [
-    "https://suzani-abdulhakim.uz",
-    "https://api.suzani-abdulhakim.uz",
-]
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["*"]  # if using ngrok
+CORS_ALLOWED_ORIGINS = ["*"]
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
