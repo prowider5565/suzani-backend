@@ -39,8 +39,8 @@ def send_email_verification(request):
         )
     # Get a connection to Redis
     connection = get_redis_connection()
-    # randint = generate_random_digit()
-    randint = "111111"
+    randint = generate_random_digit()
+    # randint = "111111"
     data = json.dumps(serializer.validated_data)
     connection.set(randint, data)
 
