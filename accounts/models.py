@@ -7,6 +7,12 @@ class BaseModel(models.Model):
     id = models.UUIDField(primary_key=True, auto_created=True, default=uuid.uuid4)
     status = models.BooleanField(default=True)
     date_created = models.DateTimeField(auto_now_add=True)
+# inside the project root
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
+
+docker compose exec web-service python manage.py makemigrations
+docker compose exec web-service python manage.py migrate
 
     class Meta:
         abstract = True
