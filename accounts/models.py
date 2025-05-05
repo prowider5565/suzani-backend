@@ -23,7 +23,7 @@ class User(AbstractUser, BaseModel):
     groups = models.ManyToManyField(
         Group,
         related_name="custom_user_set",
-        blank=True,
+        blank=True, 
         help_text=(
             "The groups this user belongs to. A user will get all permissions "
             "granted to each of their groups."
