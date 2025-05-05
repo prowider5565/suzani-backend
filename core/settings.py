@@ -12,42 +12,41 @@ env = Env()
 env.read_env()
 SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
-ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["https://4238-93-188-80-101.ngrok-free.app"]
-CSRF_TRUSTED_ORIGINS = [
-    "https://4238-93-188-80-101.ngrok-free.app",  # if using ngrok
-]
+ALLOWED_HOSTS = ["https://suzani-abdulhakim.uz"]
+CSRF_TRUSTED_ORIGINS = ["https://suzani-abdulhakim.uz"]
+CSRF_TRUSTED_ORIGINS = ["https://suzani-abdulhakim.uz"]  # if using ngrok
+CORS_ALLOWED_ORIGINS = ["https://suzani-abdulhakim.uz"]
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
-            'style': '{',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
         },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs/debug.log'),
-            'formatter': 'verbose',
-        },
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
         },
     },
-    'loggers': {
-        'django': {
-            'handlers': ['file', 'console'],
-            'level': 'INFO',
-            'propagate': True,
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "logs/debug.log"),
+            "formatter": "verbose",
+        },
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file", "console"],
+            "level": "INFO",
+            "propagate": True,
         },
     },
 }
