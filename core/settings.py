@@ -12,10 +12,10 @@ env = Env()
 env.read_env()
 SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
-ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["*"]  # if using ngrok
-CORS_ALLOWED_ORIGINS = ["*"]
+ALLOWED_HOSTS = [env.str("DOMAIN")]
+CSRF_TRUSTED_ORIGINS = [env.str("DOMAIN")]
+CSRF_TRUSTED_ORIGINS = [env.str("DOMAIN")]
+CORS_ALLOWED_ORIGINS = [env.str("DOMAIN")]
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
