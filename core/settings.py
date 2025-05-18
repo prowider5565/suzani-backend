@@ -204,7 +204,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # URL to use when referring to static files
 STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
-MEDIA_ROOT = "/var/www/suzani-media"
+MEDIA_ROOT = "/media"
 
 # Additional directories to look for static files
 STATICFILES_DIRS = [BASE_DIR / "static"]
